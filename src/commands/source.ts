@@ -2,7 +2,7 @@ import type { FredClient } from "../api/client.js";
 import type { OutputFormat } from "../cli/formatters.js";
 import { formatOutput } from "../cli/formatters.js";
 import { type GlobalOptions, buildCommonParams } from "../cli/parseArgs.js";
-import { SOURCE_HELP, SOURCES_HELP } from "../cli/help.js";
+import { SOURCE_HELP } from "../cli/help.js";
 
 export async function handleSources(
   global: GlobalOptions,
@@ -11,7 +11,7 @@ export async function handleSources(
 ): Promise<void> {
   const common = buildCommonParams(global);
   const data = await client.getSources(common);
-  process.stdout.write(formatOutput(data as any, format) + "\n");
+  process.stdout.write(formatOutput(data, format) + "\n");
 }
 
 export async function handleSource(
@@ -32,7 +32,7 @@ export async function handleSource(
     const id = positionals[0];
     if (!id) throw new Error("Usage: fred source releases <source_id>");
     const data = await client.getSourceReleases(Number(id), common);
-    process.stdout.write(formatOutput(data as any, format) + "\n");
+    process.stdout.write(formatOutput(data, format) + "\n");
     return;
   }
 
@@ -43,5 +43,5 @@ export async function handleSource(
     return;
   }
   const data = await client.getSource(sourceId, common);
-  process.stdout.write(formatOutput(data as any, format) + "\n");
+  process.stdout.write(formatOutput(data, format) + "\n");
 }

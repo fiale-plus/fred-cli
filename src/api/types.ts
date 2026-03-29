@@ -18,15 +18,15 @@ export interface ObservationParams extends RealtimeParams {
   sort_order?: "asc" | "desc";
   observation_start?: string;
   observation_end?: string;
-  units?: "lin" | "chg" | "ch1" | "pch" | "pc1" | "pca" | "cch" | "cca" | "log";
+  units?: "lin" | "chg" | "ch1" | "pch" | "pc1" | "pca" | "cch" | "cca" | "log" | (string & {});
   frequency?: string;
-  aggregation_method?: "avg" | "sum" | "eop";
-  output_type?: 1 | 2 | 3 | 4;
+  aggregation_method?: "avg" | "sum" | "eop" | (string & {});
+  output_type?: 1 | 2 | 3 | 4 | (number & {});
   vintage_dates?: string;
 }
 
 export interface SearchParams extends PaginationParams {
-  search_type?: "full_text" | "series_id";
+  search_type?: "full_text" | "series_id" | (string & {});
   filter_variable?: string;
   filter_value?: string;
   tag_names?: string;
@@ -35,7 +35,7 @@ export interface SearchParams extends PaginationParams {
 
 export interface TagFilterParams extends PaginationParams {
   tag_names?: string;
-  tag_group_id?: "freq" | "gen" | "geo" | "geot" | "rls" | "seas" | "src" | "cc";
+  tag_group_id?: "freq" | "gen" | "geo" | "geot" | "rls" | "seas" | "src" | "cc" | (string & {});
   search_text?: string;
   exclude_tag_names?: string;
 }

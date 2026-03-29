@@ -1,11 +1,5 @@
 export type OutputFormat = "json" | "csv" | "table";
 
-interface PaginatedData {
-  count?: number;
-  limit?: number;
-  offset?: number;
-}
-
 // Known array fields in FRED API responses
 const ARRAY_FIELDS = [
   "seriess",
@@ -19,7 +13,9 @@ const ARRAY_FIELDS = [
   "elements",
 ] as const;
 
-function extractItems(data: Record<string, unknown>): unknown[] {
+type DataRecord = Record<string, unknown>;
+
+function extractItems(data: DataRecord): unknown[] {
   for (const field of ARRAY_FIELDS) {
     if (Array.isArray(data[field])) {
       return data[field] as unknown[];
@@ -28,52 +24,56 @@ function extractItems(data: Record<string, unknown>): unknown[] {
   return [data];
 }
 
-function addTruncationMeta(
-  data: Record<string, unknown>,
-): Record<string, unknown> {
-  const count = data.count as number | undefined;
-  const limit = data.limit as number | undefined;
-  const offset = (data.offset as number | undefined) ?? 0;
+function hasPagination(data: DataRecord): {
+  count: number;
+  limit: number;
+  offset: number;
+} | null {
+  const count = data.count;
+  const limit = data.limit;
+  const offset = data.offset ?? 0;
+  if (typeof count === "number" && typeof limit === "number" && typeof offset === "number") {
+    if (count > offset + limit) {
+      return { count, limit, offset };
+    }
+  }
+  return null;
+}
 
-  if (count !== undefined && limit !== undefined && count > offset + limit) {
-    return { ...data, _truncated: true, _next_offset: offset + limit };
+function addTruncationMeta(data: DataRecord): DataRecord {
+  const pag = hasPagination(data);
+  if (pag) {
+    return { ...data, _truncated: true, _next_offset: pag.offset + pag.limit };
   }
   return data;
 }
 
-export function formatOutput(
-  data: Record<string, unknown>,
-  format: OutputFormat,
-): string {
+export function formatOutput(data: object, format: OutputFormat): string {
+  const d = data as DataRecord;
   switch (format) {
     case "json":
-      return JSON.stringify(addTruncationMeta(data), null, 2);
+      return JSON.stringify(addTruncationMeta(d), null, 2);
     case "csv":
-      return formatCSV(data);
+      return formatCSV(d);
     case "table":
-      return formatTable(data);
+      return formatTable(d);
   }
 }
 
-function formatCSV(data: Record<string, unknown>): string {
+function formatCSV(data: DataRecord): string {
   const items = extractItems(data);
   if (items.length === 0) return "";
 
-  const pag = data as PaginatedData;
   const lines: string[] = [];
+  const pag = hasPagination(data);
 
-  if (
-    pag.count !== undefined &&
-    pag.limit !== undefined &&
-    pag.count > (pag.offset ?? 0) + pag.limit
-  ) {
+  if (pag) {
     lines.push(
       `# Showing ${pag.limit} of ${pag.count}. Use --limit/--offset for more.`,
     );
   }
 
   if (typeof items[0] === "string") {
-    // vintage_dates are plain strings
     lines.push("value");
     for (const item of items) {
       lines.push(String(item));
@@ -81,12 +81,12 @@ function formatCSV(data: Record<string, unknown>): string {
     return lines.join("\n");
   }
 
-  const first = items[0] as Record<string, unknown>;
+  const first = items[0] as DataRecord;
   const headers = Object.keys(first);
   lines.push(headers.join(","));
 
   for (const item of items) {
-    const row = item as Record<string, unknown>;
+    const row = item as DataRecord;
     lines.push(
       headers
         .map((h) => {
@@ -102,7 +102,7 @@ function formatCSV(data: Record<string, unknown>): string {
   return lines.join("\n");
 }
 
-function formatTable(data: Record<string, unknown>): string {
+function formatTable(data: DataRecord): string {
   const items = extractItems(data);
   if (items.length === 0) return "(no results)";
 
@@ -110,10 +110,9 @@ function formatTable(data: Record<string, unknown>): string {
     return items.join("\n");
   }
 
-  const rows = items as Record<string, unknown>[];
+  const rows = items as DataRecord[];
   const headers = Object.keys(rows[0]);
 
-  // Compute column widths
   const widths = headers.map((h) =>
     Math.max(
       h.length,
@@ -121,7 +120,6 @@ function formatTable(data: Record<string, unknown>): string {
     ),
   );
 
-  // Cap column widths at 50 to keep table readable
   const maxWidth = 50;
   const cappedWidths = widths.map((w) => Math.min(w, maxWidth));
 
@@ -140,12 +138,8 @@ function formatTable(data: Record<string, unknown>): string {
     );
   }
 
-  const pag = data as PaginatedData;
-  if (
-    pag.count !== undefined &&
-    pag.limit !== undefined &&
-    pag.count > (pag.offset ?? 0) + pag.limit
-  ) {
+  const pag = hasPagination(data);
+  if (pag) {
     lines.push(
       `\nShowing ${pag.limit} of ${pag.count} results. Use --limit and --offset to paginate.`,
     );

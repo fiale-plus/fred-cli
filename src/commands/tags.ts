@@ -10,7 +10,7 @@ import { TAGS_HELP, RELATED_TAGS_HELP } from "../cli/help.js";
 
 export async function handleTags(
   action: string | undefined,
-  positionals: string[],
+  _positionals: string[],
   global: GlobalOptions,
   tagOpts: TagOptions,
   client: FredClient,

@@ -10,7 +10,7 @@ import { RELEASE_HELP, RELEASES_HELP } from "../cli/help.js";
 
 export async function handleReleases(
   action: string | undefined,
-  positionals: string[],
+  _positionals: string[],
   global: GlobalOptions,
   client: FredClient,
   format: OutputFormat,

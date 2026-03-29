@@ -15,7 +15,8 @@ function mockFetch(response: unknown, status = 200) {
     json: async () => response,
     text: async () => JSON.stringify(response),
   }));
-  (globalThis as any).fetch = fetchMock;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- test mock override
+  (globalThis as { fetch: unknown }).fetch = fetchMock;
 }
 
 function getCalledUrl(): URL {

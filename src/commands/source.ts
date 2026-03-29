@@ -2,7 +2,7 @@ import type { FredClient } from "../api/client.js";
 import type { OutputFormat } from "../cli/formatters.js";
 import { formatOutput } from "../cli/formatters.js";
 import { type GlobalOptions, buildCommonParams } from "../cli/parseArgs.js";
-import { SOURCE_HELP, SOURCES_HELP } from "../cli/help.js";
+import { SOURCE_HELP } from "../cli/help.js";
 
 export async function handleSources(
   global: GlobalOptions,

@@ -18,13 +18,13 @@ describe("formatters", () => {
 
   describe("json format", () => {
     it("outputs valid JSON", () => {
-      const output = formatOutput(sampleData as any, "json");
+      const output = formatOutput(sampleData, "json");
       const parsed = JSON.parse(output);
       assert.equal(parsed.seriess.length, 2);
     });
 
     it("adds _truncated when count > offset + limit", () => {
-      const output = formatOutput(sampleData as any, "json");
+      const output = formatOutput(sampleData, "json");
       const parsed = JSON.parse(output);
       assert.equal(parsed._truncated, true);
       assert.equal(parsed._next_offset, 2);
@@ -32,7 +32,7 @@ describe("formatters", () => {
 
     it("does not add _truncated when all results shown", () => {
       const fullData = { ...sampleData, count: 2 };
-      const output = formatOutput(fullData as any, "json");
+      const output = formatOutput(fullData, "json");
       const parsed = JSON.parse(output);
       assert.equal(parsed._truncated, undefined);
     });
@@ -40,7 +40,7 @@ describe("formatters", () => {
 
   describe("csv format", () => {
     it("outputs header row + data rows", () => {
-      const output = formatOutput(sampleData as any, "csv");
+      const output = formatOutput(sampleData, "csv");
       const lines = output.split("\n");
       // First line may be truncation comment
       const headerLine = lines.find((l) => l.startsWith("id,"))!;
@@ -49,7 +49,7 @@ describe("formatters", () => {
     });
 
     it("includes truncation comment when needed", () => {
-      const output = formatOutput(sampleData as any, "csv");
+      const output = formatOutput(sampleData, "csv");
       assert.ok(output.startsWith("# Showing 2 of 100"));
     });
 
@@ -57,14 +57,14 @@ describe("formatters", () => {
       const data = {
         seriess: [{ id: "TEST", title: "One, Two, Three" }],
       };
-      const output = formatOutput(data as any, "csv");
+      const output = formatOutput(data, "csv");
       assert.ok(output.includes('"One, Two, Three"'));
     });
   });
 
   describe("table format", () => {
     it("outputs aligned columns", () => {
-      const output = formatOutput(sampleData as any, "table");
+      const output = formatOutput(sampleData, "table");
       const lines = output.split("\n");
       // Header, separator, data rows
       assert.ok(lines.length >= 4); // header + sep + 2 rows
@@ -73,13 +73,13 @@ describe("formatters", () => {
     });
 
     it("shows pagination footer when truncated", () => {
-      const output = formatOutput(sampleData as any, "table");
+      const output = formatOutput(sampleData, "table");
       assert.ok(output.includes("Showing 2 of 100 results"));
     });
 
     it("returns '(no results)' for empty data", () => {
       const empty = { seriess: [] };
-      const output = formatOutput(empty as any, "table");
+      const output = formatOutput(empty, "table");
       assert.equal(output, "(no results)");
     });
   });
@@ -90,14 +90,14 @@ describe("formatters", () => {
     };
 
     it("csv outputs one value per line", () => {
-      const output = formatOutput(vintageData as any, "csv");
+      const output = formatOutput(vintageData, "csv");
       const lines = output.split("\n");
       assert.equal(lines[0], "value");
       assert.equal(lines[1], "2024-01-01");
     });
 
     it("table outputs one date per line", () => {
-      const output = formatOutput(vintageData as any, "table");
+      const output = formatOutput(vintageData, "table");
       assert.ok(output.includes("2024-01-01"));
     });
   });

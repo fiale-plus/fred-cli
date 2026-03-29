@@ -1,5 +1,5 @@
 {
-  "name": "fred-cli",
+  "name": "@fiale-plus/fred-cli",
   "version": "0.0.0-dev",
   "description": "Unofficial CLI and TypeScript client for the FRED API (Federal Reserve Economic Data) — designed for AI agents",
   "type": "module",

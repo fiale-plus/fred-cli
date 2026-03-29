@@ -9,6 +9,7 @@ export type {
   FredSource,
   FredTag,
   FredSeriesResponse,
+  FredSingleSeriesResponse,
   FredObservationsResponse,
   FredCategoryResponse,
   FredReleasesResponse,

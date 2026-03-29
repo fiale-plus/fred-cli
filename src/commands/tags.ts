@@ -25,7 +25,7 @@ export async function handleTags(
       ...common,
       exclude_tag_names: tagOpts.excludeTagNames,
     } as any);
-    process.stdout.write(formatOutput(data as any, format) + "\n");
+    process.stdout.write(formatOutput(data, format) + "\n");
     return;
   }
 
@@ -41,7 +41,7 @@ export async function handleTags(
     tag_group_id: tagOpts.tagGroupId as any,
     search_text: tagOpts.searchText,
   });
-  process.stdout.write(formatOutput(data as any, format) + "\n");
+  process.stdout.write(formatOutput(data, format) + "\n");
 }
 
 export async function handleRelatedTags(
@@ -64,5 +64,5 @@ export async function handleRelatedTags(
     search_text: tagOpts.searchText,
     exclude_tag_names: tagOpts.excludeTagNames,
   });
-  process.stdout.write(formatOutput(data as any, format) + "\n");
+  process.stdout.write(formatOutput(data, format) + "\n");
 }

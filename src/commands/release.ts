@@ -20,10 +20,10 @@ export async function handleReleases(
   if (!action || action === "dates") {
     if (action === "dates") {
       const data = await client.getReleasesDates(common);
-      process.stdout.write(formatOutput(data as any, format) + "\n");
+      process.stdout.write(formatOutput(data, format) + "\n");
     } else {
       const data = await client.getReleases(common);
-      process.stdout.write(formatOutput(data as any, format) + "\n");
+      process.stdout.write(formatOutput(data, format) + "\n");
     }
     return;
   }
@@ -56,17 +56,17 @@ export async function handleRelease(
     switch (action) {
       case "dates": {
         const data = await client.getReleaseDates(releaseId, common);
-        process.stdout.write(formatOutput(data as any, format) + "\n");
+        process.stdout.write(formatOutput(data, format) + "\n");
         return;
       }
       case "series": {
         const data = await client.getReleaseSeries(releaseId, common);
-        process.stdout.write(formatOutput(data as any, format) + "\n");
+        process.stdout.write(formatOutput(data, format) + "\n");
         return;
       }
       case "sources": {
         const data = await client.getReleaseSources(releaseId, common);
-        process.stdout.write(formatOutput(data as any, format) + "\n");
+        process.stdout.write(formatOutput(data, format) + "\n");
         return;
       }
       case "tags": {
@@ -76,7 +76,7 @@ export async function handleRelease(
           tag_group_id: tagOpts.tagGroupId as any,
           search_text: tagOpts.searchText,
         });
-        process.stdout.write(formatOutput(data as any, format) + "\n");
+        process.stdout.write(formatOutput(data, format) + "\n");
         return;
       }
       case "related-tags": {
@@ -88,12 +88,12 @@ export async function handleRelease(
           tag_group_id: tagOpts.tagGroupId as any,
           search_text: tagOpts.searchText,
         });
-        process.stdout.write(formatOutput(data as any, format) + "\n");
+        process.stdout.write(formatOutput(data, format) + "\n");
         return;
       }
       case "tables": {
         const data = await client.getReleaseTables(releaseId, common);
-        process.stdout.write(formatOutput(data as any, format) + "\n");
+        process.stdout.write(formatOutput(data, format) + "\n");
         return;
       }
     }
@@ -107,5 +107,5 @@ export async function handleRelease(
     return;
   }
   const data = await client.getRelease(releaseId, common);
-  process.stdout.write(formatOutput(data as any, format) + "\n");
+  process.stdout.write(formatOutput(data, format) + "\n");
 }

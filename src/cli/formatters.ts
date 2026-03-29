@@ -10,7 +10,6 @@ const ARRAY_FIELDS = [
   "sources",
   "tags",
   "vintage_dates",
-  "elements",
 ] as const;
 
 type DataRecord = Record<string, unknown>;

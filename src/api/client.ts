@@ -6,6 +6,7 @@ import type {
   TagFilterParams,
   RelatedTagParams,
   FredSeriesResponse,
+  FredSingleSeriesResponse,
   FredObservationsResponse,
   FredCategoryResponse,
   FredReleasesResponse,
@@ -74,7 +75,7 @@ export class FredClient {
 
   // ── Series ──────────────────────────────────────────────────────
 
-  async getSeries(seriesId: string, opts: RealtimeParams = {}): Promise<FredSeriesResponse> {
+  async getSeries(seriesId: string, opts: RealtimeParams = {}): Promise<FredSingleSeriesResponse> {
     return this.request("series", { series_id: seriesId, ...opts });
   }
 

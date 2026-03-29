@@ -40,4 +40,4 @@ jobs:
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           sleep 10
-          npm view fred-cli@"$VERSION"
+          npm view @fiale-plus/fred-cli@"$VERSION"

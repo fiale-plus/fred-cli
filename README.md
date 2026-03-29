@@ -1,7 +1,7 @@
-# fred-cli
+# @fiale-plus/fred-cli
 
-[![npm version](https://img.shields.io/npm/v/fred-cli.svg)](https://www.npmjs.com/package/fred-cli)
-[![npm downloads](https://img.shields.io/npm/dm/fred-cli.svg)](https://www.npmjs.com/package/fred-cli)
+[![npm version](https://img.shields.io/npm/v/@fiale-plus/fred-cli.svg)](https://www.npmjs.com/package/@fiale-plus/fred-cli)
+[![npm downloads](https://img.shields.io/npm/dm/@fiale-plus/fred-cli.svg)](https://www.npmjs.com/package/@fiale-plus/fred-cli)
 [![Test](https://github.com/fiale-plus/fred-cli/actions/workflows/test.yml/badge.svg)](https://github.com/fiale-plus/fred-cli/actions/workflows/test.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -20,7 +20,7 @@
 ## Quick Start
 
 ```bash
-npm install -g fred-cli
+npm install -g @fiale-plus/fred-cli
 export FRED_API_KEY=your-key-here
 
 fred series search "consumer price index" --limit 5
@@ -34,10 +34,10 @@ Get a free API key at: https://fred.stlouisfed.org/docs/api/api_key.html
 
 ```bash
 # Global (CLI usage)
-npm install -g fred-cli
+npm install -g @fiale-plus/fred-cli
 
 # Local (library usage)
-npm install fred-cli
+npm install @fiale-plus/fred-cli
 ```
 
 Requires Node.js >= 18.0.0.
@@ -148,7 +148,7 @@ The CLI respects FRED API defaults per endpoint. When results are paginated:
 ## Library Usage
 
 ```typescript
-import { FredClient } from "fred-cli";
+import { FredClient } from "@fiale-plus/fred-cli";
 
 const fred = new FredClient(process.env.FRED_API_KEY!);
 
@@ -191,7 +191,7 @@ fred series GDP --api-key your-key-here
 
 ```bash
 git clone https://github.com/fiale-plus/fred-cli.git
-cd fred-cli
+cd @fiale-plus/fred-cli
 npm install
 npm run build
 npm test
@@ -219,7 +219,7 @@ This software is provided "AS IS" under the MIT License, without warranty of any
 - [FRED API Documentation](https://fred.stlouisfed.org/docs/api/fred/)
 - [API Key Registration](https://fred.stlouisfed.org/docs/api/api_key.html)
 - [GitHub Repository](https://github.com/fiale-plus/fred-cli)
-- [npm Package](https://www.npmjs.com/package/fred-cli)
+- [npm Package](https://www.npmjs.com/package/@fiale-plus/fred-cli)
 
 ## License
 

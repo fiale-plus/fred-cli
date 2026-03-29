@@ -81,6 +81,13 @@ export interface FredSeriesResponse extends FredPaginatedEnvelope {
   seriess: FredSeries[];
 }
 
+/** Response for single-series lookup (no pagination envelope) */
+export interface FredSingleSeriesResponse {
+  realtime_start: string;
+  realtime_end: string;
+  seriess: FredSeries[];
+}
+
 // ── Observation types ───────────────────────────────────────────────
 
 export interface FredObservation {

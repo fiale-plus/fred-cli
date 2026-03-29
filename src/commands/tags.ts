@@ -24,7 +24,7 @@ export async function handleTags(
     const data = await client.getTagsSeries(tagOpts.tagNames, {
       ...common,
       exclude_tag_names: tagOpts.excludeTagNames,
-    } as any);
+    });
     process.stdout.write(formatOutput(data, format) + "\n");
     return;
   }
@@ -38,7 +38,7 @@ export async function handleTags(
   const data = await client.getTags({
     ...common,
     tag_names: tagOpts.tagNames,
-    tag_group_id: tagOpts.tagGroupId as any,
+    tag_group_id: tagOpts.tagGroupId,
     search_text: tagOpts.searchText,
   });
   process.stdout.write(formatOutput(data, format) + "\n");
@@ -60,7 +60,7 @@ export async function handleRelatedTags(
   const data = await client.getRelatedTags({
     ...common,
     tag_names: tagOpts.tagNames,
-    tag_group_id: tagOpts.tagGroupId as any,
+    tag_group_id: tagOpts.tagGroupId,
     search_text: tagOpts.searchText,
     exclude_tag_names: tagOpts.excludeTagNames,
   });

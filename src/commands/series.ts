@@ -34,10 +34,10 @@ export async function handleSeries(
       if (!id) throw new Error("Usage: fred series observations <series_id>");
       const data = await client.getObservations(id, {
         ...common,
-        units: obsOpts.units as any,
+        units: obsOpts.units,
         frequency: obsOpts.frequency,
-        aggregation_method: obsOpts.aggregationMethod as any,
-        output_type: obsOpts.outputType ? (Number(obsOpts.outputType) as any) : undefined,
+        aggregation_method: obsOpts.aggregationMethod,
+        output_type: obsOpts.outputType ? (Number(obsOpts.outputType)) : undefined,
         observation_start: obsOpts.observationStart,
         observation_end: obsOpts.observationEnd,
         vintage_dates: obsOpts.vintageDates,
@@ -51,7 +51,7 @@ export async function handleSeries(
       if (!text) throw new Error("Usage: fred series search <search_text>");
       const data = await client.searchSeries(text, {
         ...common,
-        search_type: searchOpts.searchType as any,
+        search_type: searchOpts.searchType,
         tag_names: searchOpts.tagNames,
         exclude_tag_names: searchOpts.excludeTagNames,
       });
@@ -103,7 +103,7 @@ export async function handleSeries(
       const data = await client.getSeriesSearchTags(text, {
         ...common,
         tag_names: tagOpts.tagNames,
-        tag_group_id: tagOpts.tagGroupId as any,
+        tag_group_id: tagOpts.tagGroupId,
         search_text: tagOpts.searchText,
       });
       process.stdout.write(formatOutput(data, format) + "\n");
@@ -118,7 +118,7 @@ export async function handleSeries(
       const data = await client.getSeriesSearchRelatedTags(text, {
         ...common,
         tag_names: tagOpts.tagNames,
-        tag_group_id: tagOpts.tagGroupId as any,
+        tag_group_id: tagOpts.tagGroupId,
         search_text: tagOpts.searchText,
       });
       process.stdout.write(formatOutput(data, format) + "\n");

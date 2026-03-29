@@ -73,7 +73,7 @@ export async function handleRelease(
         const data = await client.getReleaseTags(releaseId, {
           ...common,
           tag_names: tagOpts.tagNames,
-          tag_group_id: tagOpts.tagGroupId as any,
+          tag_group_id: tagOpts.tagGroupId,
           search_text: tagOpts.searchText,
         });
         process.stdout.write(formatOutput(data, format) + "\n");
@@ -85,7 +85,7 @@ export async function handleRelease(
         const data = await client.getReleaseRelatedTags(releaseId, {
           ...common,
           tag_names: tagOpts.tagNames,
-          tag_group_id: tagOpts.tagGroupId as any,
+          tag_group_id: tagOpts.tagGroupId,
           search_text: tagOpts.searchText,
         });
         process.stdout.write(formatOutput(data, format) + "\n");

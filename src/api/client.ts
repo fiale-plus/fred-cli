@@ -267,7 +267,7 @@ export class FredClient {
 
   async getTagsSeries(
     tagNames: string,
-    opts: PaginationParams = {},
+    opts: PaginationParams & { exclude_tag_names?: string } = {},
   ): Promise<FredSeriesResponse> {
     return this.request("tags/series", { tag_names: tagNames, ...opts });
   }
